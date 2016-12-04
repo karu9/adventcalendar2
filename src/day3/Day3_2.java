@@ -29,19 +29,19 @@ public class Day3_2 {
 			readcolumn(i+3, j, possible);
 		}
 	}
-	
-	  public static class Triangle{
-		  int a;
-		  int b;
-		  int c;
-		  public Triangle(String in){
-			  String[] sides = in.trim().split("\\s+");
-			  a = Integer.parseInt(sides[0]);
-			  b = Integer.parseInt(sides[1]);
-			  c = Integer.parseInt(sides[2]);
-		  }
-		  public boolean isPossible(){
-			  return (a+b+c) > 2 * Math.max(a, Math.max(b, c));
-		  }
-	  }
+
+	public static class Triangle{
+		int a;
+		int b;
+		int c;
+		public Triangle(String in){
+			String[] sides = in.trim().split("\\s+");
+			a = Integer.parseInt(sides[0]);
+			b = Integer.parseInt(sides[1]);
+			c = Integer.parseInt(sides[2]);
+		}
+		public boolean isPossible(){
+			return (a+b+c) > 2 * Math.max(a, Math.max(b, c));
+		}
+	}
 }
