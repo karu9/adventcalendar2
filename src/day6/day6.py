@@ -1,7 +1,6 @@
 file = open('input.txt').readlines()
 alphabet = "abcdefghijklmnopqrstuvwxyz"
 occurences = [[0 for i in range (26)] for i in range(8)]
-print(occurences)
 for input in file:
     i = 0
     while i < 8 :
