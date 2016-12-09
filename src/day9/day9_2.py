@@ -1,6 +1,7 @@
+import time
+start_time = time.time()
 file = open('input.txt').read()
 def decompress(inp) :
-    count = 0
     if inp.startswith('('):
         index = inp.index(')')
         marker = inp[1:index].split('x')
@@ -13,3 +14,4 @@ def decompress(inp) :
     else :
         return len(inp)
 print(decompress(file))
+print("--- %s seconds ---" % (time.time() - start_time))
