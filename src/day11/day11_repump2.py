@@ -1,23 +1,14 @@
 import sys
 sys.setrecursionlimit(15000000)
-import copy
 #0=microchip, 1=generator#
 #0=thulim, 1=plutonium, 2=strontium, 3=promethium, 4=ruthenium#
 objects = [(1,0),(0,0),(1,1),(1,2),(0,1),(0,2),(1,3),(0,3),(1,4),(0,4)]
 #last one is the position of the elevator#
 positions = [0,0,0,0,1,1,2,2,2,2,0]
-alreadyVisited = [positions + [0]]
 solutions = []
 def arePossible(count):
-    if count > 100:
+    if count > 250:
         return False
-    for visited in alreadyVisited:
-        if positions == visited[:-1]:
-            if count >= visited[len(visited)-1]:
-                return False
-            else:
-                alreadyVisited.remove(visited)
-                break
     for i in range(10):
         if not isPossible(i):
             return False
@@ -37,6 +28,7 @@ def isPossible(ind):
                     ret = False
     return ret
 def move(count):
+    print(count, positions)
     if positions == [3]*11:
         solutions.append(count)
         print(solution)
@@ -55,9 +47,10 @@ def move(count):
             for coord in coordsObjAtPos:
                 positions[coord] = possiblePos
                 positions[10] = possiblePos
+                count += 1
                 if arePossible(count):
-                    alreadyVisited.append(positions + [count])
-                    move(count+1)
+                    move(count)
+                count -= 1
                 positions[coord] = elevatorPos
                 positions[10] = elevatorPos
             #move two obj#
@@ -67,9 +60,10 @@ def move(count):
                         positions[coordsObjAtPos[i]] = possiblePos
                         positions[coordsObjAtPos[j]] = possiblePos
                         positions[10] = possiblePos
+                        count += 1
                         if arePossible(count):
-                            alreadyVisited.append(positions + [count])
-                            move(count+1)
+                            move(count)
+                        count -= 1
                         positions[coordsObjAtPos[i]] = elevatorPos
                         positions[coordsObjAtPos[j]] = elevatorPos
 move(0)
