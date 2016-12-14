@@ -6,7 +6,7 @@ positions = [0,0,1,0,1,0,2,2,2,2,0]
 visitedSolutions = []
 solutions = []
 def isPossible(count):
-    if count > 100:
+    if count > 200:
         return False
     for visited in visitedSolutions:
         if ''.join(visited.split(',')[:-1]) == ''.join(map(str,positions)):

@@ -1,8 +1,8 @@
 import sys
 sys.setrecursionlimit(15000000)
 #createthemaze#
-maxX = 60
-maxY = 70
+maxX = 50
+maxY = 50
 maze = [['' for i in range(maxY)] for i in range(maxY)]
 def isEven(i, j):
     return format(i*i + 3*i + 2*i*j + j + j*j + 1352, 'b').count('1') % 2 == 0
