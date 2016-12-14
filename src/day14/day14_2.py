@@ -4,9 +4,16 @@ index = 0
 triplets = []
 keys = []
 def getKey(index):
+    hashcount = 1
     key = md5()
     key.update((inp + str(index)).encode('utf-8'))
-    return key.hexdigest()
+    key = key.hexdigest()
+    while hashcount < 2017:
+        currkey = md5()
+        currkey.update(key.encode('utf-8'))
+        key = currkey.hexdigest()
+        hashcount+=1
+    return key
 while len(keys) < 75:
     key = getKey(index)
     #select only the first triplet#
