@@ -1,26 +1,22 @@
 from hashlib import md5
-inp = "qzyelonm"
+inp = "ngcjuoqr"
 index = 0
-triplets = []
 keys = []
-while len(keys) < 64:
+def getKey(index):
     key = md5()
     key.update((inp + str(index)).encode('utf-8'))
-    key = key.hexdigest()
+    return key.hexdigest()
+while len(keys) < 75:
+    key = getKey(index)
     #select only the first triplet#
-    r = ''
-    for i in range(len(key)-2):
-        if key[i] == key[i+1] and key[i] == key[i+2]:
-            triplets.append((index, key[i]))
-            break
-    for i in range(len(key)-4):
-        if key[i] == key[i+1] and key[i] == key[i+2] and key[i] == key[i+3] and key[i] == key[i+4]:
-            tripletsToRemove = []
-            for triplet in triplets:
-                if triplet[1] == key[i] and index - triplet[0] <= 1000 and index != triplet[0]:
-                    keys.append(triplet)
-                    tripletsToRemove.append(triplet)
-            for triplet in tripletsToRemove:
-                triplets.remove(triplet)
+    possibleKey = ''
+    for char in key:
+        if char*3 in key:
+            possibleKey = char
+    if len(possibleKey) != 0:
+        for i in range(1,1001):
+            kkey = getKey(index + i)
+            if possibleKey*5 in kkey:
+                keys.append((index, key))
     index += 1
 print(sorted(keys)[63])
