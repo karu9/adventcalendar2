@@ -17,8 +17,7 @@ maze[31][39] = 'O'
 #do the mazic !#
 visitedPositions = []
 solutionsSteps = []
-solutionsWithin50Steps = []
-def onTheMaze(i, j, steps, dontReVisit):
+def onTheMaze(i, j, steps):
     #ignore if position is negative or higher then limits#
     if i < 0 or j < 0 or i >= maxX or j >= maxY:
         return
@@ -26,28 +25,19 @@ def onTheMaze(i, j, steps, dontReVisit):
     if maze[i][j] == '♥':
         return
     #ignore if alreadyVisited in less steps#
-    if dontReVisit :
-        for visitedPosition in visitedPositions:
-            visitedPositionArr = visitedPosition.split('-')
-            if visitedPositionArr[0] == str(i)+','+str(j) and int(visitedPositionArr[1]) <= steps:
-                return
+    for visitedPosition in visitedPositions:
+        visitedPositionArr = visitedPosition.split('-')
+        if visitedPositionArr[0] == str(i)+','+str(j) and int(visitedPositionArr[1]) <= steps:
+            return
         #found a solution#
-        if maze[i][j] == 'O':
-            solutionsSteps.append(steps)
-            return
-    else:
-        if steps == 50 :
-            if not str(i)+','+str(j) in solutionsWithin50Steps:
-                solutionsWithin50Steps.append(str(i)+','+str(j))
-            return
-    if dontReVisit :
-        visitedPositions.append(str(i)+','+str(j)+'-'+str(steps))
-    onTheMaze(i+1, j, steps+1, dontReVisit)
-    onTheMaze(i-1, j, steps+1, dontReVisit)
-    onTheMaze(i, j-1, steps+1, dontReVisit)
-    onTheMaze(i, j+1, steps+1, dontReVisit)
-onTheMaze(1,1,0, True)
+    if maze[i][j] == 'O':
+        solutionsSteps.append(steps)
+        return
+    visitedPositions.append(str(i)+','+str(j)+'-'+str(steps))
+    onTheMaze(i+1, j, steps+1)
+    onTheMaze(i-1, j, steps+1)
+    onTheMaze(i, j-1, steps+1)
+    onTheMaze(i, j+1, steps+1)
+onTheMaze(1,1,0)
 print(min(solutionsSteps), solutionsSteps)
 visitedPositions = []
-onTheMaze(1,1,0, False)
-print(len(solutionsWithin50Steps), solutionsWithin50Steps)
