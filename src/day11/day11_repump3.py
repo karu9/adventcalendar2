@@ -20,6 +20,8 @@ def isPossible(count):
         if not i+1 in coordsObjAtPos:
             if len(list(filter(lambda x : x % 2 == 1, coordsObjAtPos))) != 0:
                 return False
+    print(positions, count)
+    visitedSolutions.append(','.join(map(str, positions))+','+str(count))
     return True            
 def move(count):
     if  positions == [3]*11:
@@ -28,6 +30,7 @@ def move(count):
     else:
         elevatorPos = positions[10]
         coordsObjAtPos = list(filter(lambda x : positions[x] == elevatorPos, range(10)))
+        shuffle(coordsObjAtPos)
         possiblePoss = []
         if elevatorPos == 0:
             possiblePoss.append(1)
@@ -43,7 +46,6 @@ def move(count):
                 positions[10] = possiblePos
                 count += 1
                 if isPossible(count):
-                    visitedSolutions.append(','.join(map(str, positions))+','+str(count))
                     move(count)
                 count -= 1
                 positions[coord] = elevatorPos
@@ -57,7 +59,6 @@ def move(count):
                         positions[10] = possiblePos
                         count += 1
                         if isPossible(count):
-                            visitedSolutions.append(','.join(map(str, positions))+','+str(count))
                             move(count)
                         count -= 1
                         positions[coordsObjAtPos[i]] = elevatorPos
