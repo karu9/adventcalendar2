@@ -9,12 +9,14 @@ solutions = []
 visited = []
 visited.append(position)
 def possible(pos):
-    if pos[-1][1] == 25:
+    if pos[-1][1] == 100:
         return False
     else:
         for visit in visited:
             if pos[-1][0] == visit[-1][0] and pos[:-1] == visit[:-1]:
                 if pos[-1][1] < visit[-1][1]:
+                    visited.remove(visit)
+                    visited.append(pos)
                     return True
                 else:
                     return False
@@ -27,7 +29,8 @@ def possible(pos):
         return True
 def move(poss):
     if poss[:-1] == [[3,3]*5]:
-        solutions.append(poss[-1])
+        print(poss)
+        solutions.append(poss)
         return
     startPos = poss[-1]
     for pos in elevatorMap[startPos[0]]:
