@@ -1,14 +1,25 @@
-inp = 3
+inp = 3014603
+elfs = []
 #create the first iteration#
-situation = [i for i in range(1,inp+1)]
-cursor = 0
-while True:
-    toremove = (cursor + round((len(situation)-.1)/2)) % len(situation)
-    if cursor == toremove :
-        break
-    elif cursor < toremove:
-        cursor += 1
-    else :
-        cursor = cursor % len(situation)
-    situation.remove(situation[toremove])
-print(situation)
+class Elf :
+    def __init__(self, id):
+        self.id = id
+        self.nextElf = None
+        self.previousElf = None
+    def delete(self):
+        self.previousElf.nextElf = self.nextElf
+        self.nextElf.previousElf = self.previousElf
+elfs = [Elf(i) for i in range(inp)]
+for i in range(inp):
+    elfs[i].nextElf = elfs[(i+1)%inp]
+    elfs[i].previousElf = elfs[(i-1)%inp]
+elf = elfs[0]
+toremove = elfs[round((len(elfs)-0.1) / 2)]
+for i in range(inp - 1):
+    toremove.delete()
+    toremove = toremove.nextElf
+    if (inp - i) % 2 == 1:
+        toremove = toremove.nextElf
+    elf = elf.nextElf
+print(elf.id+1, elf.nextElf.id+1, elf.previousElf.id+1)
+    
