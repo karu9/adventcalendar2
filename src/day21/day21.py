@@ -1,10 +1,22 @@
 from copy import copy
-import random
+from random import shuffle
 lines = open("input.txt", 'r').readlines()
 def swap(i, j, inp):
     tempinp = copy(inp)
-    tempinp = tempinp[:i] + inp[j] + tempinp[i+1:]
-    tempinp = tempinp[:j] + inp[i] + tempinp[j+1:]
+    if i != 0 and j!= len(inp)-1:
+        tempinp = tempinp[:i] + inp[j] + tempinp[i+1:]
+        tempinp = tempinp[:j] + inp[i] + tempinp[j+1:]
+    else:
+        if i == 0:
+            if j!= len(inp)-1:
+                tempinp = inp[j] + tempinp[1:]
+                tempinp = tempinp[:j] + inp[i] + tempinp[j+1:]
+            else :
+                tempinp = inp[j] + tempinp[1:]
+                tempinp = tempinp[:-1] + inp[i]
+        else :
+            tempinp = tempinp[:i] + inp[j] + tempinp[i+1:]
+            tempinp = tempinp[:-1] + inp[i]
     return tempinp
 def rotate(toRight, steps, inp):
     for i in range(steps):
@@ -15,7 +27,10 @@ def rotate(toRight, steps, inp):
     return inp
 def reverse(i, j, inp):
     tempinp = copy(inp)
-    tempinp = inp[:i] + ''.join(reversed(inp[i:j+1])) + inp[j+1:]
+    if j != len(inp) - 1 :
+        tempinp = inp[:i] + ''.join(reversed(inp[i:j+1])) + inp[j+1:]
+    else :
+        tempinp = inp[:i] + ''.join(reversed(inp[i:]))
     return tempinp
 def move(i, j, inp):
     tempinp = copy(inp)
@@ -48,4 +63,12 @@ def encrypt(inp):
     return inp
 #part 1#
 print(encrypt("abcdefgh"))
-
+#part 2#
+shuffledList = list("abcdefgh")
+shuffle(shuffledList)
+shuffled = ''.join(shuffledList)
+while encrypt(shuffled) != "fbgdceah":
+    shuffledList = list("abcdefgh")
+    shuffle(shuffledList)
+    shuffled = ''.join(shuffledList)
+print(shuffled)
